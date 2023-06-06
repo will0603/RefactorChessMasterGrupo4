@@ -113,18 +113,12 @@ public class ChessGameEngine{
         }
         if ( currentPlayer == 2 ) // black player
         {
-            if ( currentPiece.getColorOfPiece() == ChessGamePiece.BLACK ){
-                return true;
-            }
-            return false;
+            return currentPiece.getColorOfPiece() == ChessGamePiece.BLACK;
         }
         else
         // white player
         {
-            if ( currentPiece.getColorOfPiece() == ChessGamePiece.WHITE ){
-                return true;
-            }
-            return false;
+            return currentPiece.getColorOfPiece() == ChessGamePiece.WHITE;
         }
     }
     /**
@@ -167,7 +161,6 @@ public class ChessGameEngine{
         else
         {
             board.resetBoard( false );
-            // System.exit(0);
         }
     }
     /**
@@ -247,7 +240,16 @@ public class ChessGameEngine{
         board.clearColorsOnBoard();
         if ( firstClick ){
             currentPiece = squareClicked.getPieceOnSquare();
-            if ( selectedPieceIsValid() ){
+            showTrueFirstClick(squareClicked);
+        }
+        else
+        {
+            showFalseFirstClick(pieceOnSquare, squareClicked);
+        }
+    }
+    
+    public void showTrueFirstClick(BoardSquare squareClicked){
+        if ( selectedPieceIsValid() ){
                 currentPiece.showLegalMoves( board );
                 squareClicked.setBackground( Color.GREEN );
                 firstClick = false;
@@ -272,10 +274,10 @@ public class ChessGameEngine{
                         JOptionPane.ERROR_MESSAGE );
                 }
             }
-        }
-        else
-        {
-            if ( pieceOnSquare == null ||
+    }
+    
+    public void showFalseFirstClick(ChessGamePiece pieceOnSquare, BoardSquare squareClicked){
+        if ( pieceOnSquare == null ||
                 !pieceOnSquare.equals( currentPiece ) ) // moving
             {
                 boolean moveSuccessful =
@@ -307,6 +309,5 @@ public class ChessGameEngine{
             {
                 firstClick = true;
             }
-        }
     }
 }
